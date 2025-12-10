@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducción a Grafos y Árboles - Estructura de Datos</title>
+    <meta name="description"
+        content="Guía completa sobre grafos, sus representaciones formales y aplicaciones en programación">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Cytoscape.js API for Graph Visualization -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="background-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="badge">Estructura de Datos</div>
+                <h1 class="hero-title">
+                    Introducción Completa a <span class="gradient-text">Grafos y Árboles</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Estructuras matemáticas fundamentales que modelan relaciones, caminos y dependencias entre entidades
+                </p>
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-value">V + E</div>
+                        <div class="stat-label">Complejidad</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🔗</div>
+                        <div class="stat-value">∞</div>
+                        <div class="stat-label">Aplicaciones</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⚡</div>
+                        <div class="stat-value">O(1)</div>
+                        <div class="stat-label">Acceso Matriz</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Introduction Section -->
+        <section class="section intro-section">
+            <div class="container">
+                <div class="content-grid">
+                    <div class="content-text">
+                        <h2 class="section-title">¿Qué son los Grafos?</h2>
+                        <p class="section-description">
+                            Los grafos son estructuras matemáticas compuestas por un conjunto de
+                            <strong>vértices</strong> (o nodos)
+                            y un conjunto de <strong>aristas</strong>, que representan conexiones entre esos vértices.
+                        </p>
+                        <p class="section-description">
+                            Estas estructuras permiten modelar situaciones en las que existen relaciones, caminos,
+                            dependencias
+                            o enlaces entre entidades. En programación, los grafos son fundamentales para resolver
+                            problemas de
+                            rutas, búsquedas eficientes, análisis de redes, optimización y modelado de sistemas
+                            complejos.
+                        </p>
+                    </div>
+                    <div class="visual-card graph-visualization" id="intro-graph">
+                        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Edges -->
+                            <line x1="150" y1="80" x2="80" y2="150" class="edge" />
+                            <line x1="150" y1="80" x2="220" y2="150" class="edge" />
+                            <line x1="80" y1="150" x2="150" y2="220" class="edge" />
+                            <line x1="220" y1="150" x2="150" y2="220" class="edge" />
+                            <line x1="80" y1="150" x2="220" y2="150" class="edge" />
+
+                            <!-- Nodes -->
+                            <circle cx="150" cy="80" r="20" class="node node-1" />
+                            <circle cx="80" cy="150" r="20" class="node node-2" />
+                            <circle cx="220" cy="150" r="20" class="node node-3" />
+                            <circle cx="150" cy="220" r="20" class="node node-4" />
+
+                            <!-- Labels -->
+                            <text x="150" y="85" class="node-label">A</text>
+                            <text x="80" y="155" class="node-label">B</text>
+                            <text x="220" y="155" class="node-label">C</text>
+                            <text x="150" y="225" class="node-label">D</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formal Definition -->
+        <section class="section definition-section">
+            <div class="container">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="icon">📌</span>
+                        <h2>Definición Formal de Grafo</h2>
+                    </div>
+                    <div class="formula-container">
+                        <div class="formula">G = (V, E)</div>
+                    </div>
+                    <div class="definition-grid">
+                        <div class="definition-item">
+                            <div class="def-symbol">V</div>
+                            <div class="def-text">Conjunto de vértices</div>
+                        </div>
+                        <div class="definition-item">
+                            <div class="def-symbol">E</div>
+                            <div class="def-text">Conjunto de aristas (pares ordenados o no ordenados)</div>
+                        </div>
+                    </div>
+                    <div class="example-box">
+                        <div class="example-label">Ejemplo del video (corregido):</div>
+                        <code class="example-code">A = {(2,1), (2,4), (3,2), (4,3), (4,5), (5,2)}</code>
+                        <p class="example-note">Este conjunto representa las relaciones entre nodos de un grafo
+                            dirigido.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Graph Types -->
+        <section class="section types-section">
+            <div class="container">
+                <h2 class="section-title centered">📌 Tipos de Grafos</h2>
+                <div class="types-grid">
+                    <div class="type-card">
+                        <div class="type-icon">→</div>
+                        <h3 class="type-title">Grafo Dirigido</h3>
+                        <p class="type-description">Las aristas tienen dirección. Un par ordenado (a, b) significa "va
+                            desde a hacia b".</p>
+                        <div class="type-visual">
+                            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3"
+                                        orient="auto">
+                                        <polygon points="0 0, 10 3, 0 6" fill="#6366f1" />
+                                    </marker>
+                                </defs>
+                                <line x1="60" y1="75" x2="130" y2="75" class="directed-edge"
+                                    marker-end="url(#arrowhead)" />
+                                <circle cx="50" cy="75" r="15" class="node" />
+                                <circle cx="150" cy="75" r="15" class="node" />
+                                <text x="50" y="80" class="node-label">A</text>
+                                <text x="150" y="80" class="node-label">B</text>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="type-card">
+                        <div class="type-icon">↔</div>
+                        <h3 class="type-title">Grafo No Dirigido</h3>
+                        <p class="type-description">Las aristas no tienen dirección. (a, b) equivale a (b, a).</p>
+                        <div class="type-visual">
+                            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+                                <line x1="60" y1="75" x2="140" y2="75" class="edge" />
+                                <circle cx="50" cy="75" r="15" class="node" />
+                                <circle cx="150" cy="75" r="15" class="node" />
+                                <text x="50" y="80" class="node-label">A</text>
+                                <text x="150" y="80" class="node-label">B</text>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="type-card">
+                        <div class="type-icon">⚖️</div>
+                        <h3 class="type-title">Grafo Ponderado</h3>
+                        <p class="type-description">Cada arista tiene un peso o costo asociado.</p>
+                        <div class="type-visual">
+                            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+                                <line x1="60" y1="75" x2="140" y2="75" class="edge" />
+                                <circle cx="50" cy="75" r="15" class="node" />
+                                <circle cx="150" cy="75" r="15" class="node" />
+                                <text x="50" y="80" class="node-label">A</text>
+                                <text x="150" y="80" class="node-label">B</text>
+                                <text x="100" y="65" class="weight-label">5</text>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="type-card">
+                        <div class="type-icon">🔗</div>
+                        <h3 class="type-title">Grafo No Ponderado</h3>
+                        <p class="type-description">Las conexiones solo indican relación, sin valores numéricos.</p>
+                        <div class="type-visual">
+                            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+                                <line x1="60" y1="75" x2="140" y2="75" class="edge" />
+                                <circle cx="50" cy="75" r="15" class="node" />
+                                <circle cx="150" cy="75" r="15" class="node" />
+                                <text x="50" y="80" class="node-label">A</text>
+                                <text x="150" y="80" class="node-label">B</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Representations -->
+        <section class="section representations-section">
+            <div class="container">
+                <h2 class="section-title centered">📌 Representaciones Internas del Grafo</h2>
+
+                <div class="representation-cards">
+                    <!-- Adjacency Matrix -->
+                    <div class="rep-card">
+                        <div class="rep-header">
+                            <h3>A) Matriz de Adyacencia</h3>
+                        </div>
+                        <p class="rep-description">
+                            Es una matriz cuadrada donde las filas representan vértices de origen y las columnas
+                            vértices de destino.
+                        </p>
+                        <div class="matrix-container">
+                            <table class="adjacency-matrix">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>1</th>
+                                        <th>2</th>
+                                        <th>3</th>
+                                        <th>4</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>1</th>
+                                        <td>0</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <th>2</th>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <th>3</th>
+                                        <td>0</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <th>4</th>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <strong>✅ Ventajas:</strong> Acceso rápido O(1)
+                            </div>
+                            <div class="cons">
+                                <strong>❌ Desventajas:</strong> Ocupa mucha memoria O(V²)
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Adjacency List -->
+                    <div class="rep-card">
+                        <div class="rep-header">
+                            <h3>B) Lista de Adyacencia</h3>
+                        </div>
+                        <p class="rep-description">
+                            Cada vértice tiene una lista de vértices conectados.
+                        </p>
+                        <div class="list-container">
+                            <div class="adj-list-item">
+                                <span class="vertex">1:</span>
+                                <span class="connections">→ 2 → 4</span>
+                            </div>
+                            <div class="adj-list-item">
+                                <span class="vertex">2:</span>
+                                <span class="connections">→ 1 → 3</span>
+                            </div>
+                            <div class="adj-list-item">
+                                <span class="vertex">3:</span>
+                                <span class="connections">→ 2 → 4</span>
+                            </div>
+                            <div class="adj-list-item">
+                                <span class="vertex">4:</span>
+                                <span class="connections">→ 1 → 3</span>
+                            </div>
+                        </div>
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <strong>✅ Ventajas:</strong> Eficiencia en memoria, ideal para grafos grandes
+                            </div>
+                            <div class="cons">
+                                <strong>❌ Desventajas:</strong> Más lenta para verificar conexiones específicas
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Edge Set -->
+                    <div class="rep-card">
+                        <div class="rep-header">
+                            <h3>C) Conjunto de Aristas</h3>
+                        </div>
+                        <p class="rep-description">
+                            Simplemente lista todas las relaciones.
+                        </p>
+                        <div class="edge-set-container">
+                            <code class="edge-set">
+                                E = {(1,2), (1,4), (2,3), (3,4)}
+                            </code>
+                        </div>
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <strong>✅ Ventajas:</strong> Útil para grafos matemáticos o problemas teóricos
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Example Graph -->
+        <section class="section example-section">
+            <div class="container">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="icon">📌</span>
+                        <h2>Ejemplo Visual del Grafo del Video</h2>
+                    </div>
+                    <p class="centered-text">Con las aristas corregidas:</p>
+                    <div class="example-graph-container">
+                        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" class="example-graph">
+                            <defs>
+                                <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                    <polygon points="0 0, 10 3, 0 6" fill="#8b5cf6" />
+                                </marker>
+                            </defs>
+
+                            <!-- Edges with arrows -->
+                            <!-- 2 → 1 -->
+                            <path d="M 100 140 Q 120 100 180 85" class="directed-edge" marker-end="url(#arrow)" />
+                            <!-- 2 → 4 -->
+                            <path d="M 120 155 Q 210 165 275 175" class="directed-edge" marker-end="url(#arrow)" />
+                            <!-- 3 → 2 -->
+                            <path d="M 120 215 Q 105 195 100 185" class="directed-edge" marker-end="url(#arrow)" />
+                            <!-- 4 → 3 -->
+                            <path d="M 280 200 Q 200 230 145 245" class="directed-edge" marker-end="url(#arrow)" />
+                            <!-- 4 → 5 -->
+                            <path d="M 295 205 Q 290 235 285 250" class="directed-edge" marker-end="url(#arrow)" />
+                            <!-- 5 → 2 -->
+                            <path d="M 260 260 Q 180 220 115 175" class="directed-edge" marker-end="url(#arrow)" />
+
+                            <!-- Nodes -->
+                            <circle cx="200" cy="80" r="25" class="node node-1" />
+                            <circle cx="100" cy="160" r="25" class="node node-2" />
+                            <circle cx="120" cy="240" r="25" class="node node-3" />
+                            <circle cx="300" cy="180" r="25" class="node node-4" />
+                            <circle cx="280" cy="270" r="25" class="node node-5" />
+
+                            <!-- Labels -->
+                            <text x="200" y="90" class="node-label large">1</text>
+                            <text x="100" y="170" class="node-label large">2</text>
+                            <text x="120" y="250" class="node-label large">3</text>
+                            <text x="300" y="190" class="node-label large">4</text>
+                            <text x="280" y="280" class="node-label large">5</text>
+                        </svg>
+                    </div>
+                    <div class="edge-list">
+                        <div class="edge-item">2 → 1</div>
+                        <div class="edge-item">2 → 4</div>
+                        <div class="edge-item">3 → 2</div>
+                        <div class="edge-item">4 → 3</div>
+                        <div class="edge-item">4 → 5</div>
+                        <div class="edge-item">5 → 2</div>
+                    </div>
+                    <p class="centered-text highlight-text">
+                        Este grafo presenta ciclos, caminos múltiples y flujo direccional claro.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Concepts -->
+        <section class="section concepts-section">
+            <div class="container">
+                <h2 class="section-title centered">📌 Caminos, Ciclos y Conectividad</h2>
+                <div class="concepts-grid">
+                    <div class="concept-card">
+                        <div class="concept-icon">🛤️</div>
+                        <h3>Camino</h3>
+                        <p>Secuencia de vértices conectados (v₁ → v₂ → v₃)</p>
+                    </div>
+                    <div class="concept-card">
+                        <div class="concept-icon">🔄</div>
+                        <h3>Ciclo</h3>
+                        <p>Un camino que comienza y termina en el mismo vértice</p>
+                    </div>
+                    <div class="concept-card">
+                        <div class="concept-icon">🌐</div>
+                        <h3>Componente Fuertemente Conexa</h3>
+                        <p>Cada vértice puede llegar a todos los demás</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Applications -->
+        <section class="section applications-section">
+            <div class="container">
+                <h2 class="section-title centered">📌 Importancia de los Grafos en Programación</h2>
+                <div class="applications-grid">
+                    <div class="app-card">
+                        <div class="app-icon">🗺️</div>
+                        <h3>Rutas más cortas</h3>
+                        <p>Google Maps, navegación GPS</p>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">👥</div>
+                        <h3>Redes sociales</h3>
+                        <p>Facebook, Instagram, LinkedIn</p>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">🌐</div>
+                        <h3>Análisis de tráfico</h3>
+                        <p>Redes de computadoras</p>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">⚙️</div>
+                        <h3>Optimización</h3>
+                        <p>Procesos industriales</p>
+                    </div>
+                    <div class="app-card">
+                        <div class="app-icon">📦</div>
+                        <h3>Dependencias</h3>
+                        <p>NPM, Python, Linux</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Graph Traversal -->
+        <section class="section traversal-section">
+            <div class="container">
+                <h2 class="section-title centered">📌 Recorridos de Grafos</h2>
+                <div class="traversal-grid">
+                    <!-- DFS -->
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <span class="icon">🔍</span>
+                            <h3>DFS - Búsqueda en Profundidad</h3>
+                        </div>
+                        <p class="section-description">
+                            Explora lo más profundo posible antes de retroceder. Usa una pila (stack) o recursión.
+                        </p>
+                        <div class="traversal-visual">
+                            <svg viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Edges -->
+                                <line x1="150" y1="60" x2="80" y2="130" class="edge" />
+                                <line x1="150" y1="60" x2="220" y2="130" class="edge" />
+                                <line x1="80" y1="130" x2="50" y2="200" class="edge" />
+                                <line x1="80" y1="130" x2="110" y2="200" class="edge" />
+                                <line x1="220" y1="130" x2="250" y2="200" class="edge" />
+
+                                <!-- Nodes -->
+                                <circle cx="150" cy="60" r="20" class="node node-1" />
+                                <circle cx="80" cy="130" r="20" class="node node-2" />
+                                <circle cx="220" cy="130" r="20" class="node node-3" />
+                                <circle cx="50" cy="200" r="20" class="node node-4" />
+                                <circle cx="110" cy="200" r="20" class="node node-5" />
+                                <circle cx="250" cy="200" r="20" class="node node-6" />
+
+                                <!-- Labels -->
+                                <text x="150" y="65" class="node-label">A</text>
+                                <text x="80" y="135" class="node-label">B</text>
+                                <text x="220" y="135" class="node-label">C</text>
+                                <text x="50" y="205" class="node-label">D</text>
+                                <text x="110" y="205" class="node-label">E</text>
+                                <text x="250" y="205" class="node-label">F</text>
+                            </svg>
+                        </div>
+                        <div class="traversal-order">
+                            <strong>Orden de visita:</strong> A → B → D → E → C → F
+                        </div>
+                        <div class="complexity-box">
+                            <div><strong>Tiempo:</strong> O(V + E)</div>
+                            <div><strong>Espacio:</strong> O(V)</div>
+                        </div>
+                    </div>
+
+                    <!-- BFS -->
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <span class="icon">🌊</span>
+                            <h3>BFS - Búsqueda en Amplitud</h3>
+                        </div>
+                        <p class="section-description">
+                            Explora nivel por nivel. Usa una cola (queue) para mantener el orden.
+                        </p>
+                        <div class="traversal-visual">
+                            <svg viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Edges -->
+                                <line x1="150" y1="60" x2="80" y2="130" class="edge" />
+                                <line x1="150" y1="60" x2="220" y2="130" class="edge" />
+                                <line x1="80" y1="130" x2="50" y2="200" class="edge" />
+                                <line x1="80" y1="130" x2="110" y2="200" class="edge" />
+                                <line x1="220" y1="130" x2="250" y2="200" class="edge" />
+
+                                <!-- Nodes -->
+                                <circle cx="150" cy="60" r="20" class="node node-1" />
+                                <circle cx="80" cy="130" r="20" class="node node-2" />
+                                <circle cx="220" cy="130" r="20" class="node node-3" />
+                                <circle cx="50" cy="200" r="20" class="node node-4" />
+                                <circle cx="110" cy="200" r="20" class="node node-5" />
+                                <circle cx="250" cy="200" r="20" class="node node-6" />
+
+                                <!-- Labels -->
+                                <text x="150" y="65" class="node-label">A</text>
+                                <text x="80" y="135" class="node-label">B</text>
+                                <text x="220" y="135" class="node-label">C</text>
+                                <text x="50" y="205" class="node-label">D</text>
+                                <text x="110" y="205" class="node-label">E</text>
+                                <text x="250" y="205" class="node-label">F</text>
+                            </svg>
+                        </div>
+                        <div class="traversal-order">
+                            <strong>Orden de visita:</strong> A → B → C → D → E → F
+                        </div>
+                        <div class="complexity-box">
+                            <div><strong>Tiempo:</strong> O(V + E)</div>
+                            <div><strong>Espacio:</strong> O(V)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trees Section -->
+        <section class="section trees-section">
+            <div class="container">
+                <h2 class="section-title centered">🌳 Árboles - Estructuras Jerárquicas</h2>
+
+                <!-- Tree Definition -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="icon">📌</span>
+                        <h3>Definición de Árbol</h3>
+                    </div>
+                    <p class="section-description">
+                        Un árbol es un grafo conexo acíclico. Es una estructura jerárquica con un nodo raíz y
+                        nodos hijos organizados en niveles.
+                    </p>
+                    <div class="definition-grid">
+                        <div class="definition-item">
+                            <div class="def-symbol">🔝</div>
+                            <div class="def-text"><strong>Raíz:</strong> Nodo superior sin padre</div>
+                        </div>
+                        <div class="definition-item">
+                            <div class="def-symbol">🍃</div>
+                            <div class="def-text"><strong>Hoja:</strong> Nodo sin hijos</div>
+                        </div>
+                        <div class="definition-item">
+                            <div class="def-symbol">📏</div>
+                            <div class="def-text"><strong>Altura:</strong> Distancia máxima de raíz a hoja</div>
+                        </div>
+                        <div class="definition-item">
+                            <div class="def-symbol">🔢</div>
+                            <div class="def-text"><strong>Nivel:</strong> Distancia desde la raíz</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Types of Trees -->
+                <h3 class="section-title centered" style="margin-top: 3rem;">Tipos de Árboles</h3>
+                <div class="types-grid">
+                    <!-- Binary Tree -->
+                    <div class="type-card">
+                        <div class="type-icon">🌲</div>
+                        <h3 class="type-title">Árbol Binario</h3>
+                        <p class="type-description">Cada nodo tiene como máximo 2 hijos (izquierdo y derecho).</p>
+                        <div class="type-visual">
+                            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+                                <line x1="100" y1="30" x2="60" y2="70" class="edge" />
+                                <line x1="100" y1="30" x2="140" y2="70" class="edge" />
+                                <line x1="60" y1="70" x2="40" y2="110" class="edge" />
+                                <line x1="60" y1="70" x2="80" y2="110" class="edge" />
+
+                                <circle cx="100" cy="30" r="12" class="node" />
+                                <circle cx="60" cy="70" r="12" class="node" />
+                                <circle cx="140" cy="70" r="12" class="node" />
+                                <circle cx="40" cy="110" r="12" class="node" />
+                                <circle cx="80" cy="110" r="12" class="node" />
+
+                                <text x="100" y="35" class="node-label">1</text>
+                                <text x="60" y="75" class="node-label">2</text>
+                                <text x="140" y="75" class="node-label">3</text>
+                                <text x="40" y="115" class="node-label">4</text>
+                                <text x="80" y="115" class="node-label">5</text>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- BST -->
+                    <div class="type-card">
+                        <div class="type-icon">🔍</div>
+                        <h3 class="type-title">BST - Árbol Binario de Búsqueda</h3>
+                        <p class="type-description">Izquierda < Raíz < Derecha. Búsqueda eficiente O(log n).</p>
+                                <div class="type-visual">
+                                    <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+                                        <line x1="100" y1="30" x2="60" y2="70" class="edge" />
+                                        <line x1="100" y1="30" x2="140" y2="70" class="edge" />
+                                        <line x1="60" y1="70" x2="40" y2="110" class="edge" />
+                                        <line x1="140" y1="70" x2="160" y2="110" class="edge" />
+
+                                        <circle cx="100" cy="30" r="12" class="node" />
+                                        <circle cx="60" cy="70" r="12" class="node" />
+                                        <circle cx="140" cy="70" r="12" class="node" />
+                                        <circle cx="40" cy="110" r="12" class="node" />
+                                        <circle cx="160" cy="110" r="12" class="node" />
+
+                                        <text x="100" y="35" class="node-label">50</text>
+                                        <text x="60" y="75" class="node-label">30</text>
+                                        <text x="140" y="75" class="node-label">70</text>
+                                        <text x="40" y="115" class="node-label">20</text>
+                                        <text x="160" y="115" class="node-label">80</text>
+                                    </svg>
+                                </div>
+                    </div>
+
+                    <!-- AVL Tree -->
+                    <div class="type-card">
+                        <div class="type-icon">⚖️</div>
+                        <h3 class="type-title">Árbol AVL</h3>
+                        <p class="type-description">BST auto-balanceado. Diferencia de altura ≤ 1.</p>
+                        <div class="type-visual">
+                            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+                                <line x1="100" y1="30" x2="60" y2="70" class="edge" />
+                                <line x1="100" y1="30" x2="140" y2="70" class="edge" />
+                                <line x1="60" y1="70" x2="40" y2="110" class="edge" />
+                                <line x1="60" y1="70" x2="80" y2="110" class="edge" />
+                                <line x1="140" y1="70" x2="120" y2="110" class="edge" />
+                                <line x1="140" y1="70" x2="160" y2="110" class="edge" />
+
+                                <circle cx="100" cy="30" r="12" class="node" />
+                                <circle cx="60" cy="70" r="12" class="node" />
+                                <circle cx="140" cy="70" r="12" class="node" />
+                                <circle cx="40" cy="110" r="12" class="node" />
+                                <circle cx="80" cy="110" r="12" class="node" />
+                                <circle cx="120" cy="110" r="12" class="node" />
+                                <circle cx="160" cy="110" r="12" class="node" />
+
+                                <text x="100" y="35" class="node-label">50</text>
+                                <text x="60" y="75" class="node-label">30</text>
+                                <text x="140" y="75" class="node-label">70</text>
+                                <text x="40" y="115" class="node-label">20</text>
+                                <text x="80" y="115" class="node-label">40</text>
+                                <text x="120" y="115" class="node-label">60</text>
+                                <text x="160" y="115" class="node-label">80</text>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Heap -->
+                    <div class="type-card">
+                        <div class="type-icon">📊</div>
+                        <h3 class="type-title">Heap (Montículo)</h3>
+                        <p class="type-description">Árbol binario completo. Max-Heap: padre ≥ hijos.</p>
+                        <div class="type-visual">
+                            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+                                <line x1="100" y1="30" x2="60" y2="70" class="edge" />
+                                <line x1="100" y1="30" x2="140" y2="70" class="edge" />
+                                <line x1="60" y1="70" x2="40" y2="110" class="edge" />
+                                <line x1="60" y1="70" x2="80" y2="110" class="edge" />
+
+                                <circle cx="100" cy="30" r="12" class="node" />
+                                <circle cx="60" cy="70" r="12" class="node" />
+                                <circle cx="140" cy="70" r="12" class="node" />
+                                <circle cx="40" cy="110" r="12" class="node" />
+                                <circle cx="80" cy="110" r="12" class="node" />
+
+                                <text x="100" y="35" class="node-label">90</text>
+                                <text x="60" y="75" class="node-label">70</text>
+                                <text x="140" y="75" class="node-label">50</text>
+                                <text x="40" y="115" class="node-label">30</text>
+                                <text x="80" y="115" class="node-label">40</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tree Traversals -->
+                <div class="glass-card" style="margin-top: 3rem;">
+                    <div class="card-header">
+                        <span class="icon">🔄</span>
+                        <h3>Recorridos de Árboles</h3>
+                    </div>
+                    <div class="traversal-methods">
+                        <div class="method-item">
+                            <div class="method-name">Preorden (Pre-order)</div>
+                            <div class="method-order">Raíz → Izquierda → Derecha</div>
+                            <code class="method-code">visit(root) → traverse(left) → traverse(right)</code>
+                        </div>
+                        <div class="method-item">
+                            <div class="method-name">Inorden (In-order)</div>
+                            <div class="method-order">Izquierda → Raíz → Derecha</div>
+                            <code class="method-code">traverse(left) → visit(root) → traverse(right)</code>
+                        </div>
+                        <div class="method-item">
+                            <div class="method-name">Postorden (Post-order)</div>
+                            <div class="method-order">Izquierda → Derecha → Raíz</div>
+                            <code class="method-code">traverse(left) → traverse(right) → visit(root)</code>
+                        </div>
+                        <div class="method-item">
+                            <div class="method-name">Por Niveles (Level-order)</div>
+                            <div class="method-order">Nivel 0 → Nivel 1 → Nivel 2 → ...</div>
+                            <code class="method-code">BFS usando cola (queue)</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Code Examples -->
+        <section class="section code-section">
+            <div class="container">
+                <h2 class="section-title centered">💻 Ejemplos de Código</h2>
+
+                <div class="code-grid">
+                    <!-- Graph Implementation -->
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <span class="icon">🔗</span>
+                            <h3>Implementación de Grafo</h3>
+                        </div>
+                        <pre class="code-block"><code class="javascript">class Graph {
+  constructor() {
+    this.adjacencyList = {};
+  }
+  
+  addVertex(vertex) {
+    if (!this.adjacencyList[vertex]) {
+      this.adjacencyList[vertex] = [];
+    }
+  }
+  
+  addEdge(v1, v2) {
+    this.adjacencyList[v1].push(v2);
+    this.adjacencyList[v2].push(v1);
+  }
+  
+  // DFS Recursivo
+  dfs(start, visited = new Set()) {
+    visited.add(start);
+    console.log(start);
+    
+    for (let neighbor of this.adjacencyList[start]) {
+      if (!visited.has(neighbor)) {
+        this.dfs(neighbor, visited);
+      }
+    }
+  }
+  
+  // BFS
+  bfs(start) {
+    const queue = [start];
+    const visited = new Set([start]);
+    
+    while (queue.length > 0) {
+      const vertex = queue.shift();
+      console.log(vertex);
+      
+      for (let neighbor of this.adjacencyList[vertex]) {
+        if (!visited.has(neighbor)) {
+          visited.add(neighbor);
+          queue.push(neighbor);
+        }
+      }
+    }
+  }
+}</code></pre>
+                    </div>
+
+                    <!-- Tree Implementation -->
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <span class="icon">🌳</span>
+                            <h3>Implementación de Árbol Binario</h3>
+                        </div>
+                        <pre class="code-block"><code class="javascript">class TreeNode {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+class BinaryTree {
+  constructor() {
+    this.root = null;
+  }
+  
+  // Recorrido Inorden
+  inorder(node = this.root) {
+    if (node !== null) {
+      this.inorder(node.left);
+      console.log(node.value);
+      this.inorder(node.right);
+    }
+  }
+  
+  // Recorrido Preorden
+  preorder(node = this.root) {
+    if (node !== null) {
+      console.log(node.value);
+      this.preorder(node.left);
+      this.preorder(node.right);
+    }
+  }
+  
+  // Recorrido Postorden
+  postorder(node = this.root) {
+    if (node !== null) {
+      this.postorder(node.left);
+      this.postorder(node.right);
+      console.log(node.value);
+    }
+  }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Section -->
+        <section class="section comparison-section">
+            <div class="container">
+                <h2 class="section-title centered">📊 Grafos vs Árboles</h2>
+                <div class="glass-card">
+                    <div class="comparison-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Característica</th>
+                                    <th>Grafos</th>
+                                    <th>Árboles</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Definición</strong></td>
+                                    <td>Conjunto de vértices y aristas</td>
+                                    <td>Grafo conexo acíclico</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Ciclos</strong></td>
+                                    <td>Pueden tener ciclos</td>
+                                    <td>No tienen ciclos</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Raíz</strong></td>
+                                    <td>No hay nodo raíz</td>
+                                    <td>Tiene un nodo raíz</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Jerarquía</strong></td>
+                                    <td>No jerárquico</td>
+                                    <td>Jerárquico</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Conexiones</strong></td>
+                                    <td>Cualquier nodo puede conectarse con cualquier otro</td>
+                                    <td>Cada nodo tiene exactamente un padre (excepto raíz)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Aristas</strong></td>
+                                    <td>n vértices pueden tener hasta n(n-1)/2 aristas</td>
+                                    <td>n vértices tienen exactamente n-1 aristas</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Aplicaciones</strong></td>
+                                    <td>Redes sociales, mapas, internet</td>
+                                    <td>Sistemas de archivos, DOM, expresiones</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="use-cases">
+                        <div class="use-case-item">
+                            <h4>📌 Cuándo usar Grafos</h4>
+                            <ul>
+                                <li>Modelar redes (sociales, computadoras, transporte)</li>
+                                <li>Encontrar caminos más cortos</li>
+                                <li>Detectar ciclos y dependencias</li>
+                                <li>Análisis de conectividad</li>
+                            </ul>
+                        </div>
+                        <div class="use-case-item">
+                            <h4>🌳 Cuándo usar Árboles</h4>
+                            <ul>
+                                <li>Representar jerarquías (organización, archivos)</li>
+                                <li>Búsqueda y ordenamiento eficiente (BST)</li>
+                                <li>Parseo de expresiones</li>
+                                <li>Estructuras de decisión</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Algorithms -->
+        <section class="section algorithms-section">
+            <div class="container">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="icon">⚡</span>
+                        <h2>Algoritmos Fundamentales</h2>
+                    </div>
+                    <div class="algorithms-grid">
+                        <div class="algo-item">
+                            <div class="algo-name">DFS</div>
+                            <div class="algo-full">Depth First Search</div>
+                        </div>
+                        <div class="algo-item">
+                            <div class="algo-name">BFS</div>
+                            <div class="algo-full">Breadth First Search</div>
+                        </div>
+                        <div class="algo-item">
+                            <div class="algo-name">Dijkstra</div>
+                            <div class="algo-full">Camino más corto</div>
+                        </div>
+                        <div class="algo-item">
+                            <div class="algo-name">Bellman-Ford</div>
+                            <div class="algo-full">Pesos negativos</div>
+                        </div>
+                        <div class="algo-item">
+                            <div class="algo-name">Kruskal</div>
+                            <div class="algo-full">Árbol de expansión mínima</div>
+                        </div>
+                        <div class="algo-item">
+                            <div class="algo-name">Prim</div>
+                            <div class="algo-full">Árbol de expansión mínima</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Graph Visualization with API -->
+        <section class="section interactive-section">
+            <div class="container">
+                <h2 class="section-title centered">🎮 Visualización Interactiva de Grafos</h2>
+                <p class="section-description centered">
+                    Esta visualización utiliza <strong>Cytoscape.js API</strong> para renderizar grafos de forma
+                    interactiva.
+                    Puedes arrastrar los nodos, hacer zoom y explorar la estructura del grafo.
+                </p>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="icon">🔗</span>
+                        <h3>Grafo Interactivo - Red Social</h3>
+                    </div>
+                    <p class="section-description">
+                        Este ejemplo muestra una red social simple donde los nodos representan personas y las aristas
+                        representan amistades.
+                    </p>
+
+                    <!-- Cytoscape Container -->
+                    <div id="cy"
+                        style="width: 100%; height: 500px; background: rgba(15, 23, 42, 0.5); border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.2);">
+                    </div>
+
+                    <div class="api-info"
+                        style="margin-top: 2rem; padding: 1.5rem; background: rgba(99, 102, 241, 0.1); border-radius: 8px; border-left: 4px solid #6366f1;">
+                        <h4 style="color: #6366f1; margin-bottom: 0.5rem;">📡 API Utilizada: Cytoscape.js</h4>
+                        <p style="margin: 0.5rem 0; color: #cbd5e1;">
+                            <strong>Versión:</strong> 3.28.1 |
+                            <strong>Tipo:</strong> Biblioteca JavaScript para visualización de grafos |
+                            <strong>CDN:</strong> cdnjs.cloudflare.com
+                        </p>
+                        <p style="margin: 0.5rem 0; color: #94a3b8;">
+                            Cytoscape.js es una API de código abierto que permite crear visualizaciones interactivas de
+                            grafos y redes.
+                            Soporta análisis de grafos, layouts automáticos, y es ampliamente utilizada en
+                            bioinformática, análisis de redes sociales y visualización de datos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion -->
+        <section class="section conclusion-section">
+            <div class="container">
+                <div class="conclusion-card">
+                    <h2 class="section-title centered">📌 Conclusión</h2>
+                    <p class="conclusion-text">
+                        Los grafos son herramientas fundamentales en matemática y programación para modelar sistemas
+                        donde existen relaciones o flujos entre entidades. Su correcta representación y análisis
+                        permiten
+                        resolver problemas reales complejos de forma eficiente.
+                    </p>
+                    <div class="conclusion-highlight">
+                        <p>
+                            Desde redes sociales hasta sistemas de navegación, los grafos están en el corazón de las
+                            tecnologías que usamos todos los días.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Introducción a Grafos y Árboles - Estructura de Datos.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
